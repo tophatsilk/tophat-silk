@@ -9,10 +9,8 @@ folder.
 
 ## Documentation
 
-Rendered documentation can be found
-[here](https://mark-gerarts.github.io/ou-afstuderen-artefact/).
-
 - [Installation & Usage](./docs/usage.md)
-- [Development](./docs/development.md)
+- [Installation for development](./docs/development.md)
+- [Developers manual](./docs/developerManual/Introduction.md)
 - [Testing](./docs/testing.md)
 - [Generating documentation](./docs/documentation.md)
