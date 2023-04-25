@@ -74,6 +74,7 @@ With the backend server up and running, open up a separate terminal and run the
 following to get the frontend development environment up:
 
 ```console
+$ cd frontend
 $ spago build
 $ npm run serve
 ```
