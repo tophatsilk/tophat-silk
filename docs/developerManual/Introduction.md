@@ -5,7 +5,7 @@ This manual is intended for developers of the purescript-based proof-of-concept 
 The TopHat language for which the UI was developed, is a task oriented language developed for modular interactive workflows, which allows formal reasoning about programs. It was developed by Steenvoorden, Naus. and Klinik [B]. A Haskell implementation of it may be found on: https://github.com/timjs/tophat-haskell. The current vizualization framework is build upon this Haskell implementation.
 
 ## Software Requirements and Installation
-As mentioned, the original project may be found at: https://github.com/mark-gerarts/ou-afstuderen-artefact
+As mentioned, the original project may be found at: https://github.com/mark-gerarts/ou-afstuderen-artefact.
 
 The project was written in purescript version 14 and is not compatible with version 15 or higher. Windows or Mac users will have to downgrade purescript to version 14. For linux users we provide an installation script below.
 
@@ -24,7 +24,7 @@ To be installed with npm:
 - spago 0.20
 
 ### Linux installation script
-For linux (debian distros) we provide an installation script which will install all the required software (GHC, npm, cabal, zlib1g-dev, stack, hpack, purescript, and spago). The script was tested on Ubuntu 22.04, but should work with all debian derivatives.
+For linux (debian derivatives) we provide an installation script which will install all the required software (GHC, npm, cabal, zlib1g-dev, stack, hpack, purescript, and spago). The script was tested on Ubuntu 22.04, but should work with all debian derivatives.
 You may find the installation script [here](../install/install-stable-0.1.7.sh).
 The installation requires sudo rights. Please install it from the within the directory in which you downloaded the script into, with:
 ```console
@@ -79,6 +79,11 @@ main =
 As you can see, the entire main module is a call to something called Halogen. This Halogen module is the current standard for HTML programming in purescript, and much of this manual will cover its specifics.
 Closer study of the above Main module reveals there is only one function that is not part of the standard purescript libraries: the taskLoader function imported from the Component module which can be seen in Figure 1 above. The "#halogen-app" which is used for the QuerySelector, is simply the id of the HTML division used in the index.html main file.
 
-### Purescript Halogen for HTML development
+
 Therefore, to understand the frontend, we need to understand how Halogen is applied. The Halogen module framework is explained in detail in the 'Halogen Guide' (https://github.com/purescript-halogen/purescript-halogen/tree/master/docs/guide). However, as with more Purescript modules and functions, once you start to deviate from the examples in the books, it can be a bit daunting.
-We have written an introductory manual for web programming with purescript (https://github.com/tophatsilk/Purescript-HTML-tutorial) which could be helpful for understanding Halogen. However, this manual is more of an introduction into HTML programming with purescript and does not treat the Halogen module used in this project. It may be helpful to read it anyway.
+We have written an introductory manual for web programming with purescript: https://github.com/tophatsilk/Purescript-HTML-tutorial, which could be helpful for understanding Halogen. However, this manual is more of an introduction into HTML programming with purescript and does not treat the Halogen module used in this project. It may be helpful to read it anyway.
+
+### Vizualization
+As the project is meant to provide a UI for TopHat, an essential part of it is how the information (data) is presented to the user. In other words, how the tasks are presented using HTML. A query for a string, for example, will have to be presented in a different manner than a query for a boolean. In the following chapter we will  look at the way the data types are handled by the vizualization using Halogen: [The Frontend and Data Types](./Datatypes.md).
+
+[Next chapter ->](./Datatypes.md)
