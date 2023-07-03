@@ -1,4 +1,4 @@
-# Tasks and Data Types
+# Tasks and Datatypes
 As we mentioned in the Introduction, the vizualization code must somehow choose how to present data, but it also needs to be able to communicate its data to the backend. This is handled in the Tasks.purs module, which may be found in the "/frontend/src/App" directory. In this module the JSON decoding and encoding is performed for the communication between the frontend and backend.
 
 Every datatype require a JSON encoder and decoder definition. The input datatypes are handled from line 134 on. The Value datatype is introduced with three constructors; one for each datatype Int, String, and Boolean:
