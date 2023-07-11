@@ -11,7 +11,7 @@ import "tophat" Prelude hiding (guard, repeat)
 -- This file is used for development purposes in combination with yesod-devel.
 main :: IO ()
 main =
-  visualizeTaskDevel incdec
+  visualizeTaskDevel stepViewUpdate
 
 incdec :: Task h Int
 incdec =

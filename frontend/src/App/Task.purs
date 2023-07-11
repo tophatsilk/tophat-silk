@@ -19,6 +19,12 @@ import Data.Either (Either(..))
 import Data.Maybe (Maybe, fromJust)
 import Partial.Unsafe (unsafePartial)
 
+-- Module import for generic JSON.
+import Data.Argonaut.Decode.Class (class DecodeJson)
+import Data.Argonaut.Decode.Generic (genericDecodeJson)
+import Data.Argonaut.Encode.Class (class EncodeJson)
+import Data.Argonaut.Encode.Generic (genericEncodeJson)
+
 type Labels
   = Array String
 
