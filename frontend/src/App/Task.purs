@@ -26,6 +26,8 @@ import Data.Argonaut.Encode.Class (class EncodeJson)
 import Data.Argonaut.Encode.Generic (genericEncodeJson)
 import Data.Generic.Rep (class Generic)
 
+import Component.Datastructure.Typedefinitions as Typedefinitions
+
 type Labels
   = Array String
 
@@ -137,14 +139,13 @@ instance encodeJsonName :: EncodeJson Name where
   encodeJson name = case name of
     Named id -> encodeJson id
     Unnamed -> jsonNull
-    
+
+
 data Value
   = Int Int
   | String String
   | Boolean Boolean
-  | Datatype0 { text :: String 
-              , coordinates :: {x :: Number, y :: Number}
-              }
+  | Datatype0 Typedefinitions.Datatypetype
 
 instance showValue :: Show Value where
   show (Int int) = show int
