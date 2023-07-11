@@ -12,7 +12,7 @@ Module to decode JSON (into Tasks, Editors, Values and InputDescription). Module
 module App.Task where
 
 import Prelude
-import Data.Argonaut (class DecodeJson, class EncodeJson, decodeJson, encodeJson, isBoolean, isNumber, jsonEmptyObject, jsonNull, (.!=), (.:), (.:?), (:=), (~>))
+import Data.Argonaut (class DecodeJson, class EncodeJson, decodeJson, encodeJson, isBoolean, isNumber, isObject, jsonEmptyObject, jsonNull, (.!=), (.:), (.:?), (:=), (~>))
 import Data.Argonaut.Decode.Error as JsonDecodeError
 import Data.Array (filter, head, (:))
 import Data.Either (Either(..))
@@ -24,6 +24,7 @@ import Data.Argonaut.Decode.Class (class DecodeJson)
 import Data.Argonaut.Decode.Generic (genericDecodeJson)
 import Data.Argonaut.Encode.Class (class EncodeJson)
 import Data.Argonaut.Encode.Generic (genericEncodeJson)
+import Data.Generic.Rep (class Generic)
 
 type Labels
   = Array String
@@ -136,31 +137,30 @@ instance encodeJsonName :: EncodeJson Name where
   encodeJson name = case name of
     Named id -> encodeJson id
     Unnamed -> jsonNull
-
+    
 data Value
   = Int Int
   | String String
   | Boolean Boolean
+  | Datatype0 { text :: String 
+              , coordinates :: {x :: Number, y :: Number}
+              }
 
 instance showValue :: Show Value where
   show (Int int) = show int
   show (String string) = string
   show (Boolean boolean) = show boolean
+  show (Datatype0 info) = info.text <> ", (" <> show info.coordinates.x <> ", " <> show info.coordinates.y <> " )"
 
-instance decodeJsonValue :: DecodeJson Value where
-  decodeJson json = do
-    value <- decodeJson json
-    fromValue value
-    where
-    fromValue v
-      | isBoolean v = Boolean <$> decodeJson v
-      | isNumber v = Int <$> decodeJson v
-      | otherwise = String <$> decodeJson v
+-- Define the generic JSON encoding and decoding for Value.
+derive instance genericValue :: Generic Value _
 
 instance encodeJsonValue :: EncodeJson Value where
-  encodeJson (String string) = encodeJson string
-  encodeJson (Int int) = encodeJson int
-  encodeJson (Boolean bool) = encodeJson bool
+  encodeJson a = genericEncodeJson a
+
+instance decodeJsonValue :: DecodeJson Value where
+  decodeJson a = genericDecodeJson a
+
 
 data Input
   = Insert Int Value
