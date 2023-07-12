@@ -13,7 +13,7 @@ module Component.TaskLoader (taskLoader) where
 
 import Prelude
 import App.Client (ApiError, TaskResponse(..), getInitialTask, interact, reset)
-import App.Task (Editor(..), Input(..), InputDescription(..), Name(..), Task(..), Value(..), isDecide, selectInputDescription)
+import App.Task (Editor(..), Input(..), InputDescription(..), Name(..), Task(..), isDecide, selectInputDescription)
 import Component.HTML.Bulma as Bulma
 import Component.HTML.Form as Form
 import Component.HTML.Utils (css)
@@ -36,7 +36,7 @@ import Web.UIEvent.KeyboardEvent (KeyboardEvent)
 import Web.UIEvent.KeyboardEvent as KE
 import Web.UIEvent.KeyboardEvent.EventTypes as KET
 
-import Component.Datastructure.Typedefinitions as Typedefinitions
+import Component.Datastructure.Typedefinitions
 
 
 -- Because our form components can return any type, we have to define a slot
@@ -45,7 +45,7 @@ type Slots
   = ( formInt :: forall query. H.Slot query Int Int
     , formString :: forall query. H.Slot query String Int
     , formBoolean :: forall query. H.Slot query Boolean Int
-    , formDatatype0 :: forall query. H.Slot query Typedefinitions.Datatypetype Int
+    , formDatatype0 :: forall query. H.Slot query TaskContentType Int
     )
 
 _formInt = Proxy :: Proxy "formInt"

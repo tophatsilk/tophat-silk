@@ -19,14 +19,8 @@ import Data.Either (Either(..))
 import Data.Maybe (Maybe, fromJust)
 import Partial.Unsafe (unsafePartial)
 
--- Module import for generic JSON.
-import Data.Argonaut.Decode.Class (class DecodeJson)
-import Data.Argonaut.Decode.Generic (genericDecodeJson)
-import Data.Argonaut.Encode.Class (class EncodeJson)
-import Data.Argonaut.Encode.Generic (genericEncodeJson)
-import Data.Generic.Rep (class Generic)
 
-import Component.Datastructure.Typedefinitions as Typedefinitions
+import Component.Datastructure.Typedefinitions
 
 type Labels
   = Array String
@@ -141,26 +135,7 @@ instance encodeJsonName :: EncodeJson Name where
     Unnamed -> jsonNull
 
 
-data Value
-  = Int Int
-  | String String
-  | Boolean Boolean
-  | Datatype0 Typedefinitions.Datatypetype
 
-instance showValue :: Show Value where
-  show (Int int) = show int
-  show (String string) = string
-  show (Boolean boolean) = show boolean
-  show (Datatype0 info) = info.text <> ", (" <> show info.coordinates.x <> ", " <> show info.coordinates.y <> " )"
-
--- Define the generic JSON encoding and decoding for Value.
-derive instance genericValue :: Generic Value _
-
-instance encodeJsonValue :: EncodeJson Value where
-  encodeJson a = genericEncodeJson a
-
-instance decodeJsonValue :: DecodeJson Value where
-  decodeJson a = genericDecodeJson a
 
 
 data Input

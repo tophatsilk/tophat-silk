@@ -1,0 +1,71 @@
+{-|
+Module      : Component.Datastructure.Typedefinitions
+Description : Module for complex datatype definitions
+Copyright   : (c) Some Guy, 2023
+                  
+License     : ...
+Maintainer  : ...
+Stability   : experimental
+
+Module to for the definition of complex datatypes and relevant functions (into Tasks, Editors, Values and InputDescription).
+-}
+
+{-
+Changes in the datatypes also require changes in:
+- /Component/Taskloader in:
+    - renderEditor
+    - renderEditorEnter
+
+-}
+
+module Component.Datastructure.Typedefinitions where
+
+import Prelude
+import Data.Maybe (Maybe(..))
+
+-- Module import for generic JSON.
+import Data.Argonaut.Decode.Class (class DecodeJson)
+import Data.Argonaut.Decode.Generic (genericDecodeJson)
+import Data.Argonaut.Encode.Class (class EncodeJson)
+import Data.Argonaut.Encode.Generic (genericEncodeJson)
+import Data.Generic.Rep (class Generic)
+
+data Value
+  = Int Int
+  | String String
+  | Boolean Boolean
+  | Datatype0 TaskContentType
+
+instance showValue :: Show Value where
+  show (Int int) = show int
+  show (String string) = string
+  show (Boolean boolean) = show boolean
+  show (Datatype0 info) = info.text <> ", (" <> show info.coordinates.x <> ", " <> show info.coordinates.y <> " )"
+
+-- Define the generic JSON encoding and decoding for Value.
+derive instance genericValue :: Generic Value _
+
+instance encodeJsonValue :: EncodeJson Value where
+  encodeJson a = genericEncodeJson a
+
+instance decodeJsonValue :: DecodeJson Value where
+  decodeJson a = genericDecodeJson a
+
+
+-- Definition of a new type for the content of a Task.
+type TaskContentType = { text :: String 
+              , coordinates :: {x :: Number, y :: Number}
+              }
+
+-- TaskContentTypeConstructor
+data TaskContentTypeConstructor =
+  TaskContentTypeConstructor TaskContentType
+
+
+-- Default TaskContentType.
+defaultTaskContentType :: TaskContentType
+defaultTaskContentType = { text: "text", coordinates: {x:0.11, y:0.22} }
+
+-- Attempts to extract/parse a TaskContentType from a string. WIP: Temporarily always gives back Just s
+verifyDatatype0Value :: String -> Maybe TaskContentType
+verifyDatatype0Value s = Just defaultTaskContentType
