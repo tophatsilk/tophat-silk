@@ -13,7 +13,7 @@ module Component.TaskLoader (taskLoader) where
 
 import Prelude
 import App.Client (ApiError, TaskResponse(..), getInitialTask, interact, reset)
-import App.Task (Editor(..), Input(..), InputDescription(..), Name(..), Task(..), isDecide, selectInputDescription, Value(..))
+import App.Task (Editor(..), Input(..), InputDescription(..), Name(..), Task(..), isDecide, selectInputDescription)
 --2 Value(..)
 import Component.HTML.Bulma as Bulma
 import Component.HTML.Form as Form
@@ -37,7 +37,7 @@ import Web.UIEvent.KeyboardEvent (KeyboardEvent)
 import Web.UIEvent.KeyboardEvent as KE
 import Web.UIEvent.KeyboardEvent.EventTypes as KET
 
---2import Component.Datastructure.Typedefinitions
+import Component.Datastructure.Typedefinitions
 
 
 -- Because our form components can return any type, we have to define a slot

@@ -30,6 +30,12 @@ import Data.Argonaut.Encode.Class (class EncodeJson)
 import Data.Argonaut.Encode.Generic (genericEncodeJson)
 import Data.Generic.Rep (class Generic)
 
+-- Old JSON
+import Data.Argonaut (class DecodeJson, class EncodeJson, decodeJson, encodeJson, isBoolean, isNumber, isObject, jsonEmptyObject, jsonNull, (.!=), (.:), (.:?), (:=), (~>))
+import Data.Argonaut.Decode.Error as JsonDecodeError
+
+
+
 data Value
   = Int Int
   | String String
@@ -42,6 +48,22 @@ instance showValue :: Show Value where
   show (Boolean boolean) = show boolean
 --2  show (Datatype0 info) = info.text <> ", (" <> show info.coordinates.x <> ", " <> show info.coordinates.y <> " )"
 
+instance decodeJsonValue :: DecodeJson Value where
+  decodeJson json = do
+    value <- decodeJson json
+    fromValue value
+    where
+    fromValue v
+      | isBoolean v = Boolean <$> decodeJson v
+      | isNumber v = Int <$> decodeJson v
+      | otherwise = String <$> decodeJson v
+
+instance encodeJsonValue :: EncodeJson Value where
+  encodeJson (String string) = encodeJson string
+  encodeJson (Int int) = encodeJson int
+  encodeJson (Boolean bool) = encodeJson bool
+
+
 {-
 -- Define the generic JSON encoding and decoding for Value.
 derive instance genericValue :: Generic Value _
@@ -51,13 +73,15 @@ instance encodeJsonValue :: EncodeJson Value where
 
 instance decodeJsonValue :: DecodeJson Value where
   decodeJson a = genericDecodeJson a
--}
+
 
 -- Definition of a new type for the content of a Task.
 type TaskContentType = { text :: String 
               , coordinates :: {x :: Number, y :: Number}
               }
+-}
 
+{-
 -- TaskContentTypeConstructor
 data TaskContentTypeConstructor =
   TaskContentTypeConstructor TaskContentType
@@ -70,3 +94,4 @@ defaultTaskContentType = { text: "text", coordinates: {x:0.11, y:0.22} }
 -- Attempts to extract/parse a TaskContentType from a string. WIP: Temporarily always gives back Just s
 verifyDatatype0Value :: String -> Maybe TaskContentType
 verifyDatatype0Value s = Just defaultTaskContentType
+-}

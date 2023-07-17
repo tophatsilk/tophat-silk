@@ -20,7 +20,7 @@ import Data.Maybe (Maybe, fromJust)
 import Partial.Unsafe (unsafePartial)
 
 
---2 import Component.Datastructure.Typedefinitions
+import Component.Datastructure.Typedefinitions
 
 type Labels
   = Array String
@@ -134,7 +134,7 @@ instance encodeJsonName :: EncodeJson Name where
     Named id -> encodeJson id
     Unnamed -> jsonNull
 
-
+{-
 data Value
   = Int Int
   | String String
@@ -159,7 +159,7 @@ instance encodeJsonValue :: EncodeJson Value where
   encodeJson (String string) = encodeJson string
   encodeJson (Int int) = encodeJson int
   encodeJson (Boolean bool) = encodeJson bool
-
+-}
 
 data Input
   = Insert Int Value
