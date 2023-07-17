@@ -24,6 +24,8 @@ import Halogen.HTML.Properties as HP
 import Halogen.Subscription as HS
 import Math (abs)
 
+--2import Component.Datastructure.Typedefinitions
+
 data Action a
   = UpdateValue String
   | Notify a
@@ -46,6 +48,7 @@ data FormWidget
   = IntInput
   | TextInput
   | BooleanInput
+--2  | Datatype0Input
 
 derive instance eqFormWidget :: Eq FormWidget
 
@@ -87,6 +90,9 @@ intInput value =
             Nothing -> Left InvalidValue
   in
     s { widget = IntInput }
+
+--2datatype0Input :: Maybe TaskContentType -> FormState TaskContentType
+--2datatype0Input value = defaultState (fromMaybe "" value) Right
 
 textInput :: Maybe String -> FormState String
 textInput value = defaultState (fromMaybe "" value) Right
@@ -147,6 +153,7 @@ render s@{ widget: widget } = case widget of
   IntInput -> renderIntInput s
   TextInput -> renderTextInput s
   BooleanInput -> renderBooleanInput s
+--2  Datatype0Input -> renderDatatype0Input s
 
 renderIntInput :: forall m a. FormState a -> H.ComponentHTML (Action a) () m
 renderIntInput s =
@@ -194,6 +201,16 @@ renderBooleanInput s =
   in
     HH.div_
       [ getRadio true, getRadio false ]
+
+--2renderDatatype0Input :: forall m a. FormState a -> H.ComponentHTML (Action a) () m
+--2renderDatatype0Input s =
+--2  HH.input
+--2    [ css "input"
+--2    , HP.type_ HP.InputText
+--2    , HP.value s.rawValue
+--2    , HE.onValueInput UpdateValue
+--2    ]
+
 
 parseBoolean :: String -> Maybe Boolean
 parseBoolean s = case s of

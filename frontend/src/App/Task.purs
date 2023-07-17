@@ -20,7 +20,7 @@ import Data.Maybe (Maybe, fromJust)
 import Partial.Unsafe (unsafePartial)
 
 
-import Component.Datastructure.Typedefinitions
+--2 import Component.Datastructure.Typedefinitions
 
 type Labels
   = Array String
@@ -135,7 +135,30 @@ instance encodeJsonName :: EncodeJson Name where
     Unnamed -> jsonNull
 
 
+data Value
+  = Int Int
+  | String String
+  | Boolean Boolean
 
+instance showValue :: Show Value where
+  show (Int int) = show int
+  show (String string) = string
+  show (Boolean boolean) = show boolean
+
+instance decodeJsonValue :: DecodeJson Value where
+  decodeJson json = do
+    value <- decodeJson json
+    fromValue value
+    where
+    fromValue v
+      | isBoolean v = Boolean <$> decodeJson v
+      | isNumber v = Int <$> decodeJson v
+      | otherwise = String <$> decodeJson v
+
+instance encodeJsonValue :: EncodeJson Value where
+  encodeJson (String string) = encodeJson string
+  encodeJson (Int int) = encodeJson int
+  encodeJson (Boolean bool) = encodeJson bool
 
 
 data Input

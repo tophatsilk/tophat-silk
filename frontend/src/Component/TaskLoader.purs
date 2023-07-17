@@ -13,7 +13,8 @@ module Component.TaskLoader (taskLoader) where
 
 import Prelude
 import App.Client (ApiError, TaskResponse(..), getInitialTask, interact, reset)
-import App.Task (Editor(..), Input(..), InputDescription(..), Name(..), Task(..), isDecide, selectInputDescription)
+import App.Task (Editor(..), Input(..), InputDescription(..), Name(..), Task(..), isDecide, selectInputDescription, Value(..))
+--2 Value(..)
 import Component.HTML.Bulma as Bulma
 import Component.HTML.Form as Form
 import Component.HTML.Utils (css)
@@ -36,7 +37,7 @@ import Web.UIEvent.KeyboardEvent (KeyboardEvent)
 import Web.UIEvent.KeyboardEvent as KE
 import Web.UIEvent.KeyboardEvent.EventTypes as KET
 
-import Component.Datastructure.Typedefinitions
+--2import Component.Datastructure.Typedefinitions
 
 
 -- Because our form components can return any type, we have to define a slot
@@ -45,14 +46,16 @@ type Slots
   = ( formInt :: forall query. H.Slot query Int Int
     , formString :: forall query. H.Slot query String Int
     , formBoolean :: forall query. H.Slot query Boolean Int
-    , formDatatype0 :: forall query. H.Slot query TaskContentType Int
     )
+--2    , formDatatype0 :: forall query. H.Slot query TaskContentType Int -- Move up
 
 _formInt = Proxy :: Proxy "formInt"
 
 _formString = Proxy :: Proxy "formString"
 
 _formBoolean = Proxy :: Proxy "formBoolean"
+
+--2_formDatatype0 = Proxy :: Proxy "formDatatype0"
 
 -- The State holds a boolean to determine if a task is loading. It also holds
 -- the tasks that is rendered, and the types of Enter editors
@@ -286,7 +289,7 @@ renderEditor id value = case value of
   (String s) -> textInput id $ Just s
   (Int i) -> intInput id $ Just i
   (Boolean b) -> booleanInput id $ Just b
-  (Datatype0 d) -> datatype0Input id $ Just d
+--2  (Datatype0 d) -> datatype0Input id $ Just d
 
 -- Function that renders editors of Enter tasks.
 renderEditorEnter :: forall m. MonadAff m => Int -> Value -> HH.ComponentHTML Action Slots m
@@ -294,7 +297,7 @@ renderEditorEnter id value = case value of
   (String _) -> textInput id Nothing
   (Int _) -> intInput id Nothing
   (Boolean _) -> booleanInput id Nothing
-  (Datatype0 _) -> datatype0Input id Nothing
+--2  (Datatype0 _) -> datatype0Input id Nothing
 
 -- Function that renders buttons that belong to a Select task.
 renderInput :: forall a. InputDescription -> HH.HTML a Action
@@ -339,14 +342,14 @@ textInput id value =
     (\s -> Interact (Insert id (String s)))
     
 -- WIP: datatype0Input temporarily treats the content as a string
-datatype0Input :: forall m. MonadAff m => Int -> Maybe TaskContentType -> HH.ComponentHTML Action Slots m
-datatype0Input id value =
-  HH.slot
-    _formString
-    id
-    Form.component
-    (Form.textInput (Just (show value))) -- Here we use 'show value' to make a String of the content
-    (\s -> Interact (Insert id (String s)))
+--2datatype0Input :: forall m. MonadAff m => Int -> Maybe TaskContentType -> HH.ComponentHTML Action Slots m
+--2datatype0Input id value =
+--2  HH.slot
+--2    _formDatatype0
+--2    id
+--2    Form.component
+--2    (Form.dataInput (Just (show value))) -- Here we use 'show value' to make a String of the content
+--2    (\s -> Interact (Insert id (String s)))
 
 intInput :: forall m. MonadAff m => Int -> Maybe Int -> HH.ComponentHTML Action Slots m
 intInput id value =

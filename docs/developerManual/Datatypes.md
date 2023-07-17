@@ -9,7 +9,7 @@ The essential parts of the Component are its State, the render function, and the
 
 ### The Form module theory
 As mentioned in the Form.purs module itself, it is "*Very* loosely inspired by
-https://github.com/fpco/halogen-form/blob/master/src.Halogen/Form.purs." However, the corresponding introduction in https://github.com/fpco/halogen-form gives a very good introduction into the principles of form usage, and may be very helpful for understanding the form.purs module in this project. Furthermore, the formlet concept upon this form usage is based is introduced by Cooper, Lindley, Wadler and Yallop's paper [The Essence of Form Abstraction](http://homepages.inf.ed.ac.uk/slindley/papers/formlets-essence.pdf). Reading this paper, as well as the aforementioned introduction by chrisdone on github could be very helpful in designing more complex forms. 
+https://github.com/fpco/halogen-form." However, the corresponding introduction in https://github.com/fpco/halogen-form gives a very good introduction into the principles of form usage, and may be very helpful for understanding the form.purs module in this project. Furthermore, the formlet concept upon this form usage is based is introduced by Cooper, Lindley, Wadler and Yallop's paper [The Essence of Form Abstraction](http://homepages.inf.ed.ac.uk/slindley/papers/formlets-essence.pdf). Reading this paper, as well as the aforementioned introduction by chrisdone on github could be very helpful in designing more complex forms. 
 
 However, as mentioned, the code in the Form.purs module is not an exact replication of the above principles, so we will discuss the actual code as well.
 

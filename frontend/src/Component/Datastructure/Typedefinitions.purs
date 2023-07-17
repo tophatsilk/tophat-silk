@@ -34,14 +34,15 @@ data Value
   = Int Int
   | String String
   | Boolean Boolean
-  | Datatype0 TaskContentType
+--2  | Datatype0 TaskContentType
 
 instance showValue :: Show Value where
   show (Int int) = show int
   show (String string) = string
   show (Boolean boolean) = show boolean
-  show (Datatype0 info) = info.text <> ", (" <> show info.coordinates.x <> ", " <> show info.coordinates.y <> " )"
+--2  show (Datatype0 info) = info.text <> ", (" <> show info.coordinates.x <> ", " <> show info.coordinates.y <> " )"
 
+{-
 -- Define the generic JSON encoding and decoding for Value.
 derive instance genericValue :: Generic Value _
 
@@ -50,7 +51,7 @@ instance encodeJsonValue :: EncodeJson Value where
 
 instance decodeJsonValue :: DecodeJson Value where
   decodeJson a = genericDecodeJson a
-
+-}
 
 -- Definition of a new type for the content of a Task.
 type TaskContentType = { text :: String 
