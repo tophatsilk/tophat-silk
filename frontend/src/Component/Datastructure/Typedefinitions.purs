@@ -37,13 +37,13 @@ import Data.Argonaut.Decode.Error as JsonDecodeError
 
 
 data Value
-  = Int Int
+  = Number Number
   | String String
   | Boolean Boolean
 --2  | Datatype0 TaskContentType
 
 instance showValue :: Show Value where
-  show (Int int) = show int
+  show (Number number) = show number
   show (String string) = string
   show (Boolean boolean) = show boolean
 --2  show (Datatype0 info) = info.text <> ", (" <> show info.coordinates.x <> ", " <> show info.coordinates.y <> " )"
@@ -55,14 +55,13 @@ instance decodeJsonValue :: DecodeJson Value where
     where
     fromValue v
       | isBoolean v = Boolean <$> decodeJson v
-      | isNumber v = Int <$> decodeJson v
+      | isNumber v = Number <$> decodeJson v
       | otherwise = String <$> decodeJson v
 
 instance encodeJsonValue :: EncodeJson Value where
   encodeJson (String string) = encodeJson string
-  encodeJson (Int int) = encodeJson int
+  encodeJson (Number number) = encodeJson number
   encodeJson (Boolean bool) = encodeJson bool
-
 
 {-
 -- Define the generic JSON encoding and decoding for Value.
@@ -73,8 +72,9 @@ instance encodeJsonValue :: EncodeJson Value where
 
 instance decodeJsonValue :: DecodeJson Value where
   decodeJson a = genericDecodeJson a
+-}
 
-
+{-
 -- Definition of a new type for the content of a Task.
 type TaskContentType = { text :: String 
               , coordinates :: {x :: Number, y :: Number}

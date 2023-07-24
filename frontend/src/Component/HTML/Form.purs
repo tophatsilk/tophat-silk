@@ -5,13 +5,13 @@ state and validation.
 *Very* loosely inspired by
 https://github.com/fpco/halogen-form/blob/master/src/Halogen/Form.purs
 -}
-module Component.HTML.Form (FormState, Validator, FormWidget, ValidationError, intInput, textInput, booleanInput, component) where
+module Component.HTML.Form (FormState, Validator, FormWidget, ValidationError, numberInput, textInput, booleanInput, component) where
 
 import Prelude
 import Component.HTML.Utils (css)
 import Data.DateTime.Instant (Instant, unInstant)
 import Data.Either (Either(..))
-import Data.Int (fromString)
+import Data.Number (fromString)
 import Data.Maybe (Maybe(..), fromMaybe)
 import Data.Time.Duration (Milliseconds(..))
 import Effect.Aff as Aff
@@ -45,7 +45,7 @@ data ValidationError
   = InvalidValue
 
 data FormWidget
-  = IntInput
+  = NumberInput
   | TextInput
   | BooleanInput
 --2  | Datatype0Input
@@ -79,8 +79,8 @@ defaultState value validate =
   }
 
 -- Helper functions to construct form fields of a given type.
-intInput :: Maybe Int -> FormState Int
-intInput value =
+numberInput :: Maybe Number -> FormState Number
+numberInput value =
   let
     s =
       defaultState
@@ -89,7 +89,7 @@ intInput value =
             Just v' -> Right v'
             Nothing -> Left InvalidValue
   in
-    s { widget = IntInput }
+    s { widget = NumberInput }
 
 --2datatype0Input :: Maybe TaskContentType -> FormState TaskContentType
 --2datatype0Input value = defaultState (fromMaybe "" value) Right
@@ -150,13 +150,13 @@ startDelay val = do
 -- Function that renders an input. Takes a FormState as argument.
 render :: forall m a. FormState a -> H.ComponentHTML (Action a) () m
 render s@{ widget: widget } = case widget of
-  IntInput -> renderIntInput s
+  NumberInput -> renderNumberInput s
   TextInput -> renderTextInput s
   BooleanInput -> renderBooleanInput s
 --2  Datatype0Input -> renderDatatype0Input s
 
-renderIntInput :: forall m a. FormState a -> H.ComponentHTML (Action a) () m
-renderIntInput s =
+renderNumberInput :: forall m a. FormState a -> H.ComponentHTML (Action a) () m
+renderNumberInput s =
   let
     cssValue = if s.isValid then "input" else "input is-danger"
   in
