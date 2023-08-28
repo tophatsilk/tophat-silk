@@ -23,15 +23,20 @@ import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
 import Halogen.Subscription as HS
 import Math (abs)
+import HTML.Codegen.Halogen as HCH
+
+import Data.Argonaut.Core as DAC
 
 --2import Component.Datastructure.Typedefinitions
 
 data Action a
   = UpdateValue String
+  | UpdateDataStorage String
   | Notify a
 
 type FormState a
   = { rawValue :: String
+    , dataStorage :: DAC.Json
     , isValid :: Boolean
     , validate :: Validator a
     , widget :: FormWidget
@@ -72,6 +77,7 @@ component =
 defaultState :: forall a. String -> Validator a -> FormState a
 defaultState value validate =
   { rawValue: value
+  , dataStorage: (DAC.fromString "DefaultJson")
   , isValid: true
   , validate: validate
   , widget: TextInput
@@ -112,6 +118,21 @@ booleanInput value =
 -- function that defines actions.
 handleAction :: forall output m a. MonadAff m => Action output -> H.HalogenM (FormState output) (Action output) a output m Unit
 handleAction = case _ of
+
+  UpdateDataStorage v -> do
+    s <- H.get
+    case s.validate v of
+      Left _ -> do
+        H.put $ s { isValid = false }
+      Right v' -> do
+        -- Initialize a delay: only when the user stopped typing for 500ms, we
+        -- trigger the actual event.
+        t <- H.liftEffect now
+        H.put $ s { isValid = true, lastChangeAt = t }
+        _ <- H.subscribe =<< startDelay (Notify v')
+        pure unit
+    H.modify_ \s' -> s' { dataStorage = (DAC.fromString v) }
+
   UpdateValue v -> do
     s <- H.get
     case s.validate v of
@@ -155,6 +176,7 @@ render s@{ widget: widget } = case widget of
   BooleanInput -> renderBooleanInput s
 --2  Datatype0Input -> renderDatatype0Input s
 
+
 renderNumberInput :: forall m a. FormState a -> H.ComponentHTML (Action a) () m
 renderNumberInput s =
   let
@@ -168,13 +190,25 @@ renderNumberInput s =
       , HE.onValueInput UpdateValue
       ]
 
+safeDataStorageString :: Maybe String -> String
+safeDataStorageString (Just a) = a
+safeDataStorageString Nothing = "safe string"
+
 renderTextInput :: forall m a. FormState a -> H.ComponentHTML (Action a) () m
 renderTextInput s =
-  HH.input
-    [ css "input"
-    , HP.type_ HP.InputText
-    , HP.value s.rawValue
-    , HE.onValueInput UpdateValue
+  HH.div_
+    [HH.input
+      [ css "input"
+      , HP.type_ HP.InputText
+      , HP.value s.rawValue
+      , HE.onValueInput UpdateValue
+      ],
+     HH.input
+      [ css "input"
+      , HP.type_ HP.InputText
+      --- , HP.value (safeDataStorageString (DAC.toString s.dataStorage))
+      , HE.onValueInput UpdateDataStorage
+      ]
     ]
 
 renderBooleanInput :: forall m a. FormState a -> H.ComponentHTML (Action a) () m

@@ -58,6 +58,25 @@ In accordance to the Halogen component structure, a render function is provided 
 The Halogen handleAction function is defined at line 106. The input is obtained for the Compenent (H.get) and validated, but the state is only modified when the user has stopped type for 500 ms (the 'delay' defined at line 54). Here we see the use of the state parameter 'lastChangedAt' to record the input timing.
 As long as a proper validation function ('validate') is provided for the datatype, a new datatype apparently requires no changes here.
 
+### User Input and Numbers
+The form that is used to enter numbers, uses the HTML class input with type 'number' (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number). This limits the entry options, because without special measures this input class only accepts integers, although this may depend on the browser type. Considering there is no guarantee that the input will accept on-integer numbers, this input type should be used for integers only. 
+One might use a relatively simple workaround to add non-integer values. This is by adding the 'step' attribute (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number). However, giving this 'step' attribute a low value, such as 0.001, will create the weird effect that changing the number using the stepper arrows in the right part of the input will only increase the input value by this small step. It also requires a step value small enough to obtain the desired floating point number. Which begs the question: "Which step size is small enough to accomodate all future uses of the input type?" A possible solution is using the 'step="any"' attribute.
+
+However, the 'step' attribute does not seem to be supported in the purescript Halogen version used in the current project. In future versions, this may be a solution, because there is a new module: "Html.Codegen.Halogen" (current version: 0.01) that does support the 'step' attribute.
+
+An alternative approach is using the attribute: 'inputmode="decimal"', and possibly a 'pattern="[0-9]*[.,]?[0-9]*" ' attribute.
+(https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/inputMode)
+
+However, purescript does not, at the moment, support the 'inputmode' attribute.
+When we try to add the property as described in the "Rendering HTML" chapter of the Halogen Guide.
+```
+inputmode :: forall r i. String -> HH.IProp ( sandbox :: String | r ) i
+inputmode = HH.prop (HH.PropName "inputmode")
+```
+We get a type error. So it seems this property is not supported by Halogen neither.
+
+#Note: Using alternative input modes, such as the pattern attribute, may void the standard validation supplied by the HTML input number type, and may require extra validation of the user input.
+
 
 ### Datatype distinction beyond the Form module
 In the sections above we discussed how the frontend treats the datatypes differently when it renders a user interface. But the frontend also makes distinction in how the handle the datatypes in its communication. This distinction may be found in the Task.purs module, which we will discuss in the next chapter: [Tasks and Data Types](./Tasks.md).

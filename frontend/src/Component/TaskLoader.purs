@@ -201,6 +201,7 @@ renderTask (Edit name@(Named id) Enter) inputDescriptions =
       "<Text>" -> String ""
       "<Number>" -> Number 0.0
       "<Bool>" -> Boolean false
+      -- Other datatype? ------------------
       _ -> String "should not be possible?"
   in
     Bulma.panel ("Enter Task [" <> show name <> "]")
