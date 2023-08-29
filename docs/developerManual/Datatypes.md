@@ -59,6 +59,8 @@ The Halogen handleAction function is defined at line 106. The input is obtained 
 As long as a proper validation function ('validate') is provided for the datatype, a new datatype apparently requires no changes here.
 
 ### User Input and Numbers
+The project now knows two number types: 'Number' and 'Int'.
+
 The form that is used to enter numbers, uses the HTML class input with type 'number' (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number). This limits the entry options, because without special measures this input class only accepts integers, although this may depend on the browser type. Considering there is no guarantee that the input will accept on-integer numbers, this input type should be used for integers only. 
 One might use a relatively simple workaround to add non-integer values. This is by adding the 'step' attribute (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number). However, giving this 'step' attribute a low value, such as 0.001, will create the weird effect that changing the number using the stepper arrows in the right part of the input will only increase the input value by this small step. It also requires a step value small enough to obtain the desired floating point number. Which begs the question: "Which step size is small enough to accomodate all future uses of the input type?" A possible solution is using the 'step="any"' attribute.
 

@@ -21,7 +21,10 @@ Changes in the datatypes also require changes in:
 module Component.Datastructure.Typedefinitions where
 
 import Prelude
-import Data.Maybe (Maybe(..))
+import Data.Maybe (Maybe(..), isJust)
+
+-- New import after adding Number datatype
+import Data.Int as DI -- for fromNumber
 
 -- Module import for generic JSON.
 import Data.Argonaut.Decode.Class (class DecodeJson)
@@ -38,16 +41,19 @@ import Data.Argonaut.Decode.Error as JsonDecodeError
 
 
 data Value
-  = Number Number
+  = Int Int
+  | Number Number
   | String String
   | Boolean Boolean
 --2  | Datatype0 TaskContentType
 
 instance showValue :: Show Value where
+  show (Int int) = show int
   show (Number number) = show number
   show (String string) = string
   show (Boolean boolean) = show boolean
 --2  show (Datatype0 info) = info.text <> ", (" <> show info.coordinates.x <> ", " <> show info.coordinates.y <> " )"
+
 
 instance decodeJsonValue :: DecodeJson Value where
   decodeJson json = do
@@ -56,11 +62,12 @@ instance decodeJsonValue :: DecodeJson Value where
     where
     fromValue v
       | isBoolean v = Boolean <$> decodeJson v
-      | isNumber v = Number <$> decodeJson v
+      | isNumber v = Number <$> decodeJson v        
       | otherwise = String <$> decodeJson v
 
 instance encodeJsonValue :: EncodeJson Value where
   encodeJson (String string) = encodeJson string
+  encodeJson (Int int) = encodeJson int
   encodeJson (Number number) = encodeJson number
   encodeJson (Boolean bool) = encodeJson bool
 

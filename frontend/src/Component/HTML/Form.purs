@@ -5,13 +5,14 @@ state and validation.
 *Very* loosely inspired by
 https://github.com/fpco/halogen-form/blob/master/src/Halogen/Form.purs
 -}
-module Component.HTML.Form (FormState, Validator, FormWidget, ValidationError, numberInput, textInput, booleanInput, component) where
+module Component.HTML.Form (FormState, Validator, FormWidget, ValidationError, intInput, numberInput, textInput, booleanInput, component) where
 
 import Prelude
 import Component.HTML.Utils (css)
 import Data.DateTime.Instant (Instant, unInstant)
 import Data.Either (Either(..))
-import Data.Number (fromString)
+import Data.Number as DN
+import Data.Int as DI
 import Data.Maybe (Maybe(..), fromMaybe)
 import Data.Time.Duration (Milliseconds(..))
 import Effect.Aff as Aff
@@ -23,7 +24,6 @@ import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
 import Halogen.Subscription as HS
 import Math (abs)
-import HTML.Codegen.Halogen as HCH
 
 import Data.Argonaut.Core as DAC
 
@@ -50,7 +50,8 @@ data ValidationError
   = InvalidValue
 
 data FormWidget
-  = NumberInput
+  = IntInput
+  | NumberInput
   | TextInput
   | BooleanInput
 --2  | Datatype0Input
@@ -85,13 +86,25 @@ defaultState value validate =
   }
 
 -- Helper functions to construct form fields of a given type.
+intInput :: Maybe Int -> FormState Int
+intInput value =
+  let
+    s =
+      defaultState
+        (fromMaybe "" $ show <$> value)
+        $ \v -> case DI.fromString v of
+            Just v' -> Right v'
+            Nothing -> Left InvalidValue
+  in
+    s { widget = IntInput }
+
 numberInput :: Maybe Number -> FormState Number
 numberInput value =
   let
     s =
       defaultState
         (fromMaybe "" $ show <$> value)
-        $ \v -> case fromString v of
+        $ \v -> case DN.fromString v of
             Just v' -> Right v'
             Nothing -> Left InvalidValue
   in
@@ -171,11 +184,25 @@ startDelay val = do
 -- Function that renders an input. Takes a FormState as argument.
 render :: forall m a. FormState a -> H.ComponentHTML (Action a) () m
 render s@{ widget: widget } = case widget of
+  IntInput -> renderIntInput s
   NumberInput -> renderNumberInput s
   TextInput -> renderTextInput s
   BooleanInput -> renderBooleanInput s
 --2  Datatype0Input -> renderDatatype0Input s
 
+
+renderIntInput :: forall m a. FormState a -> H.ComponentHTML (Action a) () m
+renderIntInput s =
+  let
+    cssValue = if s.isValid then "input" else "input is-danger"
+  in
+    HH.input
+      [ css cssValue
+      , HP.type_ HP.InputNumber
+      , HP.value s.rawValue
+      , HP.tabIndex 0
+      , HE.onValueInput UpdateValue
+      ]
 
 renderNumberInput :: forall m a. FormState a -> H.ComponentHTML (Action a) () m
 renderNumberInput s =
@@ -190,9 +217,7 @@ renderNumberInput s =
       , HE.onValueInput UpdateValue
       ]
 
-safeDataStorageString :: Maybe String -> String
-safeDataStorageString (Just a) = a
-safeDataStorageString Nothing = "safe string"
+
 
 renderTextInput :: forall m a. FormState a -> H.ComponentHTML (Action a) () m
 renderTextInput s =

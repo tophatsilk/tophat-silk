@@ -134,32 +134,6 @@ instance encodeJsonName :: EncodeJson Name where
     Named id -> encodeJson id
     Unnamed -> jsonNull
 
-{-
-data Value
-  = Int Int
-  | String String
-  | Boolean Boolean
-
-instance showValue :: Show Value where
-  show (Int int) = show int
-  show (String string) = string
-  show (Boolean boolean) = show boolean
-
-instance decodeJsonValue :: DecodeJson Value where
-  decodeJson json = do
-    value <- decodeJson json
-    fromValue value
-    where
-    fromValue v
-      | isBoolean v = Boolean <$> decodeJson v
-      | isNumber v = Int <$> decodeJson v
-      | otherwise = String <$> decodeJson v
-
-instance encodeJsonValue :: EncodeJson Value where
-  encodeJson (String string) = encodeJson string
-  encodeJson (Int int) = encodeJson int
-  encodeJson (Boolean bool) = encodeJson bool
--}
 
 data Input
   = Insert Int Value

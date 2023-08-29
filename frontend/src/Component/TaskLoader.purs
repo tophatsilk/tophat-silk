@@ -43,11 +43,13 @@ import Component.Datastructure.Typedefinitions
 -- Because our form components can return any type, we have to define a slot
 -- type for every scalar value we need.
 type Slots
-  = ( formNumber :: forall query. H.Slot query Number Int
+  = ( formInt :: forall query. H.Slot query Int Int
+    , formNumber :: forall query. H.Slot query Number Int
     , formString :: forall query. H.Slot query String Int
     , formBoolean :: forall query. H.Slot query Boolean Int
     )
---2    , formDatatype0 :: forall query. H.Slot query TaskContentType Int -- Move up
+
+_formInt = Proxy :: Proxy "formInt"
 
 _formNumber = Proxy :: Proxy "formNumber"
 
@@ -55,7 +57,6 @@ _formString = Proxy :: Proxy "formString"
 
 _formBoolean = Proxy :: Proxy "formBoolean"
 
---2_formDatatype0 = Proxy :: Proxy "formDatatype0"
 
 -- The State holds a boolean to determine if a task is loading. It also holds
 -- the tasks that is rendered, and the types of Enter editors
@@ -199,6 +200,7 @@ renderTask (Edit name@(Named id) Enter) inputDescriptions =
     typeOfEditor :: Value
     typeOfEditor = case inputDescriptionWanted of
       "<Text>" -> String ""
+      "<Int>" -> Int 0
       "<Number>" -> Number 0.0
       "<Bool>" -> Boolean false
       -- Other datatype? ------------------
@@ -288,7 +290,8 @@ renderTask (Fail) _ =
 renderEditor :: forall m. MonadAff m => Int -> Value -> HH.ComponentHTML Action Slots m
 renderEditor id value = case value of
   (String s) -> textInput id $ Just s
-  (Number i) -> numberInput id $ Just i
+  (Int i) -> intInput id $ Just i
+  (Number n) -> numberInput id $ Just n
   (Boolean b) -> booleanInput id $ Just b
 --2  (Datatype0 d) -> datatype0Input id $ Just d
 
@@ -296,6 +299,7 @@ renderEditor id value = case value of
 renderEditorEnter :: forall m. MonadAff m => Int -> Value -> HH.ComponentHTML Action Slots m
 renderEditorEnter id value = case value of
   (String _) -> textInput id Nothing
+  (Int _) -> intInput id Nothing
   (Number _) -> numberInput id Nothing
   (Boolean _) -> booleanInput id Nothing
 --2  (Datatype0 _) -> datatype0Input id Nothing
@@ -351,6 +355,15 @@ textInput id value =
 --2    Form.component
 --2    (Form.dataInput (Just (show value))) -- Here we use 'show value' to make a String of the content
 --2    (\s -> Interact (Insert id (String s)))
+
+intInput :: forall m. MonadAff m => Int -> Maybe Int -> HH.ComponentHTML Action Slots m  
+intInput id value =
+  HH.slot
+    _formInt
+    id
+    Form.component
+    (Form.intInput value)
+    (\i -> Interact (Insert id (Int i)))                     
 
 numberInput :: forall m. MonadAff m => Int -> Maybe Number -> HH.ComponentHTML Action Slots m
 numberInput id value =
