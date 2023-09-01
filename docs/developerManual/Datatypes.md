@@ -79,6 +79,29 @@ We get a type error. So it seems this property is not supported by Halogen neith
 
 #Note: Using alternative input modes, such as the pattern attribute, may void the standard validation supplied by the HTML input number type, and may require extra validation of the user input.
 
+### Json Template for encode testing of new datatypes
+We provide a template code for testing the Json encoding and decoding of new datatypes in a separate directory:
+[Json test code template] (./Code/JsonTemplate/Main.purs)
+Unfortunately try.purescript.org does not seem to support the Argonaut module, so you'll need to use the code locally.
+
+### Datatypes in the Taskloader module
+In the Taskloader module Slots and Proxys are defined for every datatype:
+```
+type Slots
+  = ( formInt :: forall query. H.Slot query Int Int
+    , formNumber :: forall query. H.Slot query Number Int
+    , formString :: forall query. H.Slot query String Int
+    , formBoolean :: forall query. H.Slot query Boolean Int
+    )
+
+_formInt = Proxy :: Proxy "formInt"
+
+_formNumber = Proxy :: Proxy "formNumber"
+
+_formString = Proxy :: Proxy "formString"
+
+_formBoolean = Proxy :: Proxy "formBoolean"
+```
 
 ### Datatype distinction beyond the Form module
 In the sections above we discussed how the frontend treats the datatypes differently when it renders a user interface. But the frontend also makes distinction in how the handle the datatypes in its communication. This distinction may be found in the Task.purs module, which we will discuss in the next chapter: [Tasks and Data Types](./Tasks.md).

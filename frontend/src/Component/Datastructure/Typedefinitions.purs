@@ -22,6 +22,8 @@ module Component.Datastructure.Typedefinitions where
 
 import Prelude
 import Data.Maybe (Maybe(..), isJust)
+import Data.Either
+import Math (round)
 
 -- New import after adding Number datatype
 import Data.Int as DI -- for fromNumber
@@ -34,8 +36,8 @@ import Data.Argonaut.Encode.Generic (genericEncodeJson)
 import Data.Generic.Rep (class Generic)
 
 -- Old JSON
-import Data.Argonaut (class DecodeJson, class EncodeJson, decodeJson, encodeJson, isBoolean, isNumber, isObject, jsonEmptyObject, jsonNull, (.!=), (.:), (.:?), (:=), (~>))
-import Data.Argonaut.Decode.Error as JsonDecodeError
+import Data.Argonaut (JsonDecodeError, Json, class DecodeJson, class EncodeJson, decodeJson, encodeJson, isBoolean, isNumber, isObject, jsonEmptyObject, jsonNull, (.!=), (.:), (.:?), (:=), (~>))
+-- import Data.Argonaut.Decode.Error as JsonDecodeError
 
 
 
@@ -45,14 +47,12 @@ data Value
   | Number Number
   | String String
   | Boolean Boolean
---2  | Datatype0 TaskContentType
 
 instance showValue :: Show Value where
   show (Int int) = show int
   show (Number number) = show number
   show (String string) = string
   show (Boolean boolean) = show boolean
---2  show (Datatype0 info) = info.text <> ", (" <> show info.coordinates.x <> ", " <> show info.coordinates.y <> " )"
 
 
 instance decodeJsonValue :: DecodeJson Value where
@@ -62,6 +62,7 @@ instance decodeJsonValue :: DecodeJson Value where
     where
     fromValue v
       | isBoolean v = Boolean <$> decodeJson v
+      | isInt v = Int <$> decodeJson v
       | isNumber v = Number <$> decodeJson v        
       | otherwise = String <$> decodeJson v
 
@@ -70,6 +71,18 @@ instance encodeJsonValue :: EncodeJson Value where
   encodeJson (Int int) = encodeJson int
   encodeJson (Number number) = encodeJson number
   encodeJson (Boolean bool) = encodeJson bool
+  
+-- Json parser for Int
+-- Warning: This test fails if a Number is encoded that is rounded: e.g. '1.0' is tested as Int!
+-- This is due to way in which the information is encoded in Argonaut Json. 
+-- The trailing '.0' is not encoded! Even '2.000' is still encoded as '2'.
+isInt :: Json -> Boolean
+isInt v = (isNumber v && (isRoundNumber (decodeJson v)))
+  
+-- Simple function to check if a Number is an integer.
+isRoundNumber :: Either JsonDecodeError Number -> Boolean
+isRoundNumber (Right v) = 0.0 == v - (round v)
+isRoundNumber (Left _) = false
 
 {-
 -- Define the generic JSON encoding and decoding for Value.
@@ -83,8 +96,9 @@ instance decodeJsonValue :: DecodeJson Value where
 -}
 
 {-
--- Definition of a new type for the content of a Task.
-type TaskContentType = { text :: String 
+-- Definition of a suggested new example type for the content of a Task.
+type TaskContentType = { type :: String 
+              , UI :: String
               , coordinates :: {x :: Number, y :: Number}
               }
 -}
@@ -97,7 +111,7 @@ data TaskContentTypeConstructor =
 
 -- Default TaskContentType.
 defaultTaskContentType :: TaskContentType
-defaultTaskContentType = { text: "text", coordinates: {x:0.11, y:0.22} }
+defaultTaskContentType = { type: "coordinates", UI: "canvas", coordinates: {x:0.11, y:0.22} }
 
 -- Attempts to extract/parse a TaskContentType from a string. WIP: Temporarily always gives back Just s
 verifyDatatype0Value :: String -> Maybe TaskContentType
