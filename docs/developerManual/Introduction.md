@@ -1,5 +1,7 @@
 # Developer manual for TopHat vizualization project: Introduction
-This manual is intended for developers of the purescript-based proof-of-concept TopHat GUI developed by Gerarts, De Hoog, Naus, and Steenvoorden ([Gerarts, De Hoog, Naus, and Steenvoorden](https://github.com/mark-gerarts/ou-afstuderen-artefact)). The current framework is not yet a fully fledged TOP framework [A] and this manual is meant for developers working on its expansion. In this manual we will elaborate on the information in the introductory paper [A]. The aim of this manual is to aid new developers by providing background information on the modules and functions. This part of the manual describes the frontend of the framework.
+This manual is intended for developers of the purescript-based proof-of-concept TopHat GUI developed by Gerarts, De Hoog, Naus, and Steenvoorden (Gerarts, De Hoog, Naus, and Steenvoorden [1]). The current framework is not yet a fully fledged TOP framework [A] and this manual is meant for developers working on its expansion. In this manual we will elaborate on the information in the introductory paper [2][2]. The aim of this manual is to aid new developers by providing background information on the modules and functions. This part of the manual describes the frontend of the framework.
+
+
 
 ## TopHat
 The TopHat language for which the UI was developed, is a task oriented language developed for modular interactive workflows, which allows formal reasoning about programs. It was developed by Steenvoorden, Naus. and Klinik [B]. A Haskell implementation of it may be found on: https://github.com/timjs/tophat-haskell. The current vizualization framework is build upon this Haskell implementation.
@@ -87,3 +89,10 @@ We have written an introductory manual for web programming with purescript: http
 As the project is meant to provide a UI for TopHat, an essential part of it is how the information (data) is presented to the user. In other words, how the tasks are presented using HTML. A query for a string, for example, will have to be presented in a different manner than a query for a boolean. In the following chapter we will  look at the way the data types are handled by the vizualization using Halogen: [The Frontend and Data Types](./Datatypes.md).
 
 [Next chapter ->](./Datatypes.md)
+
+[A1] https://github.com/mark-gerarts/ou-afstuderen-artefact
+
+
+[A2] Mark Gerarts, Marc de Hoog, Nico Naus, and Tim Steenvoorden. 2021. Creating Interactive Visualizations of TopHat Programs. arXiv:2208.13870v1 [cs.SE] 29 Aug 2022
+
+[A3] Tim Steenvoorden, Nico Naus, and Markus Klinik. 2019. TopHat: A formal foundation for task-oriented programming. In *PPDP ’19, October 7–9, 2019, Porto, Portugal*. https://doi.org/10.1145/3354166.3354182
