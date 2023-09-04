@@ -293,7 +293,6 @@ renderEditor id value = case value of
   (Int i) -> intInput id $ Just i
   (Number n) -> numberInput id $ Just n
   (Boolean b) -> booleanInput id $ Just b
---2  (Datatype0 d) -> datatype0Input id $ Just d
 
 -- Function that renders editors of Enter tasks.
 renderEditorEnter :: forall m. MonadAff m => Int -> Value -> HH.ComponentHTML Action Slots m
@@ -302,7 +301,6 @@ renderEditorEnter id value = case value of
   (Int _) -> intInput id Nothing
   (Number _) -> numberInput id Nothing
   (Boolean _) -> booleanInput id Nothing
---2  (Datatype0 _) -> datatype0Input id Nothing
 
 -- Function that renders buttons that belong to a Select task.
 renderInput :: forall a. InputDescription -> HH.HTML a Action
@@ -346,16 +344,6 @@ textInput id value =
     (Form.textInput value)
     (\s -> Interact (Insert id (String s)))
     
--- WIP: datatype0Input temporarily treats the content as a string
---2datatype0Input :: forall m. MonadAff m => Int -> Maybe TaskContentType -> HH.ComponentHTML Action Slots m
---2datatype0Input id value =
---2  HH.slot
---2    _formDatatype0
---2    id
---2    Form.component
---2    (Form.dataInput (Just (show value))) -- Here we use 'show value' to make a String of the content
---2    (\s -> Interact (Insert id (String s)))
-
 intInput :: forall m. MonadAff m => Int -> Maybe Int -> HH.ComponentHTML Action Slots m  
 intInput id value =
   HH.slot

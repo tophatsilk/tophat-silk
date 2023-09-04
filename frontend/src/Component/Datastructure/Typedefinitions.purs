@@ -24,8 +24,6 @@ import Prelude
 import Data.Maybe (Maybe(..), isJust)
 import Data.Either
 import Math (round)
-
--- New import after adding Number datatype
 import Data.Int as DI -- for fromNumber
 
 -- Module import for generic JSON.
@@ -35,12 +33,8 @@ import Data.Argonaut.Encode.Class (class EncodeJson)
 import Data.Argonaut.Encode.Generic (genericEncodeJson)
 import Data.Generic.Rep (class Generic)
 
--- Old JSON
+-- 'Old' JSON
 import Data.Argonaut (JsonDecodeError, Json, class DecodeJson, class EncodeJson, decodeJson, encodeJson, isBoolean, isNumber, isObject, jsonEmptyObject, jsonNull, (.!=), (.:), (.:?), (:=), (~>))
--- import Data.Argonaut.Decode.Error as JsonDecodeError
-
-
-
 
 data Value
   = Int Int
@@ -53,7 +47,6 @@ instance showValue :: Show Value where
   show (Number number) = show number
   show (String string) = string
   show (Boolean boolean) = show boolean
-
 
 instance decodeJsonValue :: DecodeJson Value where
   decodeJson json = do
@@ -103,11 +96,11 @@ type TaskContentType = { type :: String
               }
 -}
 
-{-
+-- Suggestions for a type contructor for a new datatype.
+{- 
 -- TaskContentTypeConstructor
 data TaskContentTypeConstructor =
   TaskContentTypeConstructor TaskContentType
-
 
 -- Default TaskContentType.
 defaultTaskContentType :: TaskContentType
