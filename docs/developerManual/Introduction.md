@@ -1,10 +1,10 @@
 # Developer manual for TopHat vizualization project: Introduction
-This manual is intended for developers of the purescript-based proof-of-concept TopHat GUI developed by Gerarts, De Hoog, Naus, and Steenvoorden (Gerarts, De Hoog, Naus, and Steenvoorden [1]). The current framework is not yet a fully fledged TOP framework [A] and this manual is meant for developers working on its expansion. In this manual we will elaborate on the information in the introductory paper [2][2]. The aim of this manual is to aid new developers by providing background information on the modules and functions. This part of the manual describes the frontend of the framework.
+This manual is intended for developers of the purescript-based proof-of-concept TopHat GUI developed by Gerarts, De Hoog, Naus, and Steenvoorden (Gerarts, De Hoog, Naus, and Steenvoorden [1]). The current framework is not yet a fully fledged TOP framework [2] and this manual is meant for developers working on its expansion. In this manual we will elaborate on the information in the introductory paper [2]. The aim of this manual is to aid new developers by providing background information on the modules and functions. This part of the manual describes the frontend of the framework.
 
 
 
 ## TopHat
-The TopHat language for which the UI was developed, is a task oriented language developed for modular interactive workflows, which allows formal reasoning about programs. It was developed by Steenvoorden, Naus. and Klinik [B]. A Haskell implementation of it may be found on: https://github.com/timjs/tophat-haskell. The current vizualization framework is build upon this Haskell implementation.
+The TopHat language for which the UI was developed, is a task oriented language developed for modular interactive workflows, which allows formal reasoning about programs. It was developed by Steenvoorden, Naus. and Klinik [3]. A Haskell implementation of it may be found on: https://github.com/timjs/tophat-haskell. The current vizualization framework is build upon this Haskell implementation.
 
 ## Software Requirements and Installation
 As mentioned, the original project may be found at: https://github.com/mark-gerarts/ou-afstuderen-artefact.
@@ -49,13 +49,18 @@ The frontend has a modular structure typical of purescript projects as shown bel
 │   ├── Client.purs
 │   └── Task.purs
 ├── Component
+│   ├── Datastructure
+│   │   ├── Typedefinitions.purs<sup>(i)</sup>
 │   ├── HTML
 │   │   ├── Bulma.purs
 │   │   ├── Form.purs
 │   │   └── Utils.purs
 │   └── TaskLoader.purs
 └── Main.purs
+
+<sup>(i)</sup>This module and its directory were added in this fork to start the separation of datatype dependent code fron non-dependent code.
 </pre>
+
 **Figure 1: Directory structure of the frontend.**
 
 And though we will try to avoid copying code that is already in the project, in this manual, the Main module is shown below to demonstrate the peculiarities of 'programming for the web', or, in this case, 'programming for an UI' in purescript:
@@ -90,9 +95,10 @@ As the project is meant to provide a UI for TopHat, an essential part of it is h
 
 [Next chapter ->](./Datatypes.md)
 
-[A1] https://github.com/mark-gerarts/ou-afstuderen-artefact
+# References
 
+[1] https://github.com/mark-gerarts/ou-afstuderen-artefact
 
-[A2] Mark Gerarts, Marc de Hoog, Nico Naus, and Tim Steenvoorden. 2021. Creating Interactive Visualizations of TopHat Programs. arXiv:2208.13870v1 [cs.SE] 29 Aug 2022
+[2] Mark Gerarts, Marc de Hoog, Nico Naus, and Tim Steenvoorden. 2021. Creating Interactive Visualizations of TopHat Programs. arXiv:2208.13870v1 [cs.SE] 29 Aug 2022
 
-[A3] Tim Steenvoorden, Nico Naus, and Markus Klinik. 2019. TopHat: A formal foundation for task-oriented programming. In *PPDP ’19, October 7–9, 2019, Porto, Portugal*. https://doi.org/10.1145/3354166.3354182
+[3] Tim Steenvoorden, Nico Naus, and Markus Klinik. 2019. TopHat: A formal foundation for task-oriented programming. In *PPDP ’19, October 7–9, 2019, Porto, Portugal*. https://doi.org/10.1145/3354166.3354182
