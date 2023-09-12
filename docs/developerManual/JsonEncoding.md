@@ -15,3 +15,21 @@ The project was initially developed with a number of basic datatypes (Boolean, I
 
 As you can see in the template, the datatype is defined ("data Information =") and a generic instance is defined with its encoding and decoding. Defining a new datatype is only a matter of a new definition with its instances.
 
+In the Component.Datastructure.Typedefinitions module there is already {-commented out-} code given with suggestions on how to apply generic encoding. To clarify we will copy part of that code here:
+```
+{-
+-- Definition of a suggested new example type for the content of a Task.
+type TaskContentType = { type :: String 
+              , UI :: String
+              , coordinates :: {x :: Number, y :: Number}
+              }
+-}
+```
+**Figure 1**. An example of a record datatype used in generic encoding.
+In principle, this record datatype has three parts:
+1. The name or tag of the datatype, such as: Boolean, Int, or, in this case 'coordinates', to be encoded.
+2. The type of the User Interface. For example, numbers may use a standard input box in which the used can type the number, but you could also use a slider to enter a number. In the example in Fig. 1, coordinates may be entered by typing numbers, but also by moving a mouse over a canvas. The latter interface is demonstrated in our [Introductory manual for web programming with purescript](https://github.com/tophatsilk/Purescript-HTML-tutorial/blob/main/Chapter5.md). (**Note:** The event handling in this example deviates from the event handling in our project and may require extra recoding.)
+3. The actual datatype data to be encoded.
+
+
+As we mentioned above, as well as several times earlier, the project might be expanded by new datatypes, requiring changes in the Json encoding and decoding. This, however, is not the only way in which the project might develop. That is why we will give suggestions for new developments in our chapter on [Suggestions for Future Developments](./FutureDevelopments.md).

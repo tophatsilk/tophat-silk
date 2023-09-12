@@ -27,7 +27,7 @@ type FormState a
     , lastChangeAt :: Instant
     }
 ```
-**Figure 1**  FromState type in Form.purs.
+**Figure 1**.  FromState type in Form.purs.
 
 The 'rawValue' of the state is a String. This data type was probably chosen based on the JSON data representation of raw data in the project. Json encoding and decoding is discussed in detail in the [next chapter](./JsonEncoding.md).
 
@@ -41,7 +41,7 @@ data FormWidget
   | TextInput
   | BooleanInput
 ```
-**Figure 2**  FromWidget definition in Form.purs.
+**Figure 2**.  FromWidget definition in Form.purs.
 
 These FormWidget are called in the helper functions at lines 86 and further in the Form.purs, that verify input.
 
@@ -56,7 +56,7 @@ And finally, there is the manner upon which the information in the interface is 
 In accordance to the Halogen component structure, a render function is provided (line 180 in Form.purs). In the definition of this structure, again, the distinction is made between the datatypes (Int, Text, Boolean, and, recently, Number). For each type a separate render function is defined. This implies that, if we were to introduce a new datatype, a new, separate render function will have to be defined using the Halogen syntax.
 
 #### Component action handling
-The Halogen handleAction function is defined at line 127. The input is obtained for the Compenent (H.get) and validated, but the state is only modified when the user has stopped type for 500 ms (the 'delay' function defined at line 61). Here we see the use of the state parameter 'lastChangedAt' to record the input timing.
+The Halogen handleAction function is defined at line 127. The input is obtained for the Compenent (H.get) and validated, but the state is only modified when the user has stopped typing for 500 ms (the 'delay' function defined at line 61). Here we see the use of the state parameter 'lastChangedAt' to record the input timing.
 As long as a proper validation function ('validate') is provided for the datatype, a new datatype requires no changes here.
 
 ### User Input and Numbers
@@ -99,6 +99,8 @@ _formString = Proxy :: Proxy "formString"
 
 _formBoolean = Proxy :: Proxy "formBoolean"
 ```
+**Figure 3**. Slot and proxy definitions in the Taskloader module.
+
 To completely separate the datatype specific code from the rest of the project, it might be an idea for future development to move these definitions to the Component/Datastructure/Typedefinitions.purs - module
 
 ### Conclusion

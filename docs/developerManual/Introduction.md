@@ -1,43 +1,12 @@
 # Developer manual for TopHat vizualization project: Introduction
 This manual is intended for developers of the purescript-based proof-of-concept TopHat GUI developed by Gerarts, De Hoog, Naus, and Steenvoorden (Gerarts, De Hoog, Naus, and Steenvoorden [1]). The current framework is not yet a fully fledged TOP framework [2] and this manual is meant for developers working on its expansion. In this manual we will elaborate on the information in the introductory paper [2]. The aim of this manual is to aid new developers by providing background information on the modules and functions. This part of the manual describes the frontend of the framework.
 
+A separate manual to help install and set up the development environment is given [here](../development.md).
+
 
 
 ## TopHat
 The TopHat language for which the UI was developed, is a task oriented language developed for modular interactive workflows, which allows formal reasoning about programs. It was developed by Steenvoorden, Naus. and Klinik [3]. A Haskell implementation of it may be found on: https://github.com/timjs/tophat-haskell. The current vizualization framework is build upon this Haskell implementation.
-
-## Software Requirements and Installation
-As mentioned, the original project may be found at: https://github.com/mark-gerarts/ou-afstuderen-artefact.
-
-The project was written in purescript version 14 and is not compatible with version 15 or higher. Windows or Mac users will have to downgrade purescript to version 14. For linux users we provide an installation script below.
-
-The software versions needed are:
-
-General software:
-- ghc 8.8.4
-- npm 8.5.1
-- cabal 3.0.0.0
-- zlib1g 1:1.2.11
-- stack 2.9.1
-- hpack 0.34.2
-
-To be installed with npm:
-- purescript 0.14
-- spago 0.20
-
-### Linux installation script
-For linux (debian derivatives) we provide an installation script which will install all the required software (GHC, npm, cabal, zlib1g-dev, stack, hpack, purescript, and spago). The script was tested on Ubuntu 22.04, but should work with all debian derivatives.
-You may find the installation script [here](../install/install-stable-0.1.7.sh).
-The installation requires sudo rights. Please install it from the within the directory in which you downloaded the script into, with:
-```console
-$ sudo apt update
-$ sudo apt upgrade
-$ sudo sh ./install-stable-0.1.7.sh
-```
-
-### Developer notes on upgrading
-The installation script may be easily adapted to new software versions, when the project is updated. The versions of the relevant software are given in a list (single point of definition) and may be changed according to requirements.
-
 
 ## Purescript and structural programming
 The framework is build in purescript. If you are not familiar with structural programming languages, it is highly recommended to read "Purescript by Example" (https://book.purescript.org/) before reading this manual. If you are familiar with structural programming languages, such as Haskell, you are still recommended to look through this introductory book, but you could probably skip through some parts.

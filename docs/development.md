@@ -1,5 +1,8 @@
 # Development setup
 
+## Introduction
+In the following instructions are given on how to set up en environment for development. These instructions will get you up and running. A more in depth manual on the content of the project is given in the [Developer Manual](./developerManual/Introduction.md).
+
 ## Installation
 
 The project was written in purescript version 14 and is not compatible with version 15 or higher. Windows or Mac users will have to downgrade purescript to version 14. For linux users we provide an installation script below.
@@ -18,7 +21,7 @@ To be installed with npm:
 - purescript 0.14
 - spago 0.20
 
-## Linux installation script
+### Linux installation script
 For linux (debian distros) we provide an installation script which will install all the required software (GHC, npm, cabal, zlib1g-dev, stack, hpack, purescript, and spago). The script was tested on Ubuntu 22.04, but should work with all debian derivatives.
 You may find the installation script [here](../install/install-stable-0.1.7.sh).
 The installation requires sudo rights. Please install it from the within the directory in which you downloaded the script into, with:
@@ -27,6 +30,9 @@ $ sudo apt update
 $ sudo apt upgrade
 $ sudo sh ./install-stable-0.1.7.sh
 ```
+### Developer notes on upgrading
+The installation script may be easily adapted to new software versions, when the project is updated. The versions of the relevant software are given in a list (single point of definition) and may be changed according to requirements.
+
 
 ## One-time commands
 
