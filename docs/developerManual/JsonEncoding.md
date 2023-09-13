@@ -1,3 +1,5 @@
+[Introduction](./Introduction.md) |  [The Frontend and Data Types](./Datatypes.md)  |  [Json Encoding](./JsonEncoding.md)  |  [Suggestions for Future Developments](./FutureDevelopments.md)
+
 # Json encoding and decoding
 As Json encoding and decoding is essential for the communication in the project, we dedicate a separate chapter to it. We even provide two code templates: one for datatype specific Json encoding, and one for generic Json encoding.
 
@@ -15,7 +17,7 @@ The project was initially developed with a number of basic datatypes (Boolean, I
 
 As you can see in the template, the datatype is defined ("data Information =") and a generic instance is defined with its encoding and decoding. Defining a new datatype is only a matter of a new definition with its instances.
 
-In the Component.Datastructure.Typedefinitions module there is already {-commented out-} code given with suggestions on how to apply generic encoding. To clarify we will copy part of that code here:
+In the Component.Datastructure.Typedefinitions module there is already {-commented out-} code given with suggestions on how to apply generic encoding. To clarify, we will copy part of that code here:
 ```
 {-
 -- Definition of a suggested new example type for the content of a Task.

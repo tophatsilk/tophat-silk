@@ -1,3 +1,5 @@
+[Introduction](./Introduction.md) |  [The Frontend and Data Types](./Datatypes.md)  |  [Json Encoding](./JsonEncoding.md)  |  [Suggestions for Future Developments](./FutureDevelopments.md)
+
 # The Frontend and Data Types
 As we mentioned in the Introduction, the vizualization code must somehow choose how to present data: In a user interface a request to enter a string for e.g. a name will usually be presented in a different way then a request to enter a number for e.g. the amount of items a user wants.
 
@@ -29,7 +31,7 @@ type FormState a
 ```
 **Figure 1**.  FromState type in Form.purs.
 
-The 'rawValue' of the state is a String. This data type was probably chosen based on the JSON data representation of raw data in the project. Json encoding and decoding is discussed in detail in the [next chapter](./JsonEncoding.md).
+The 'rawValue' of the state is a String. This data type was chosen based on the JSON data representation of raw data in the project. Json encoding and decoding is discussed in detail in the [next chapter](./JsonEncoding.md).
 
 The parser-based validation (represented by the isValid and validate types) is based on the validation principle for formlets (See: https://github.com/fpco/halogen-form).
 
@@ -57,7 +59,6 @@ In accordance to the Halogen component structure, a render function is provided 
 
 #### Component action handling
 The Halogen handleAction function is defined at line 127. The input is obtained for the Compenent (H.get) and validated, but the state is only modified when the user has stopped typing for 500 ms (the 'delay' function defined at line 61). Here we see the use of the state parameter 'lastChangedAt' to record the input timing.
-As long as a proper validation function ('validate') is provided for the datatype, a new datatype requires no changes here.
 
 ### User Input and Numbers
 The project now knows two number types: 'Number' and 'Int'.
