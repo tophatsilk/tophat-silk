@@ -1,4 +1,4 @@
-# Developer manual for TopHat vizualization project:
+# Developer manual for TopHat vizualization project
 
 This is a manual for developers of the TopHat vizualization project.
 

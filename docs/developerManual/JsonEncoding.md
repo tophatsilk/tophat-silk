@@ -35,3 +35,5 @@ In principle, this record datatype has three parts:
 
 
 As we mentioned above, as well as several times earlier, the project might be expanded by new datatypes, requiring changes in the Json encoding and decoding. This, however, is not the only way in which the project might develop. That is why we will give suggestions for new developments in our chapter on [Suggestions for Future Developments](./FutureDevelopments.md).
+
+[Next chapter ->](./FutureDevelopments.md)
