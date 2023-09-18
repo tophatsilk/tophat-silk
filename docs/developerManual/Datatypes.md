@@ -1,4 +1,4 @@
-[Introduction](./Introduction.md) |  [The Frontend and Data Types](./Datatypes.md)  |  [JSON Encoding](./JsonEncoding.md)  |  [Suggestions for Future Developments](./FutureDevelopments.md)
+[Introduction](./Introduction.md) |  [The Frontend and Data Types](./Datatypes.md)  |  [JSON Encoding and Decoding](./JsonEncoding.md)  |  [Suggestions for Future Developments](./FutureDevelopments.md)
 
 # The Frontend and Data Types
 As we mentioned in the Introduction, the vizualization code must somehow choose how to present data: In a user interface a request to enter a string for e.g. a name will usually be presented in a different way than a request to enter a number for e.g. the amount of items a user wants.
@@ -45,7 +45,7 @@ data FormWidget
 ```
 **Figure 2**.  FromWidget definition in Form.purs.
 
-These FormWidgeta are called in the helper functions at lines 86 and further in the Form.purs, that verify input.
+These FormWidgets are called in the helper functions at lines 86 and further in the Form.purs, that verify input.
 
 Expanding the number of data types will have to start here.
 

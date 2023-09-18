@@ -1,6 +1,6 @@
-[Introduction](./Introduction.md) |  [The Frontend and Data Types](./Datatypes.md)  |  [JSON Encoding](./JsonEncoding.md)  |  [Suggestions for Future Developments](./FutureDevelopments.md)
+[Introduction](./Introduction.md) |  [The Frontend and Data Types](./Datatypes.md)  |  [JSON Encoding and Decoding](./JsonEncoding.md)  |  [Suggestions for Future Developments](./FutureDevelopments.md)
 
-# JSON encoding and decoding
+# JSON Encoding and Decoding
 As JSON encoding and decoding is essential for the communication in the project, we dedicate a separate chapter to it. We even provide two code templates: one for datatype specific JSON encoding, and one for generic JSON encoding.
 
 If you are not familiar with the JSON data representation, you may read about it in our introductory manual for web programming with Purescript: https://github.com/tophatsilk/Purescript-HTML-tutorial/Chapter4.md, in which we also discuss the standard Purescript Argonaut module for JSON that is used in this project.

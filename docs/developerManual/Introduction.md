@@ -1,4 +1,4 @@
-[Introduction](./Introduction.md) |  [The Frontend and Data Types](./Datatypes.md)  |  [JSON Encoding](./JsonEncoding.md)  |  [Suggestions for Future Developments](./FutureDevelopments.md)
+[Introduction](./Introduction.md) |  [The Frontend and Data Types](./Datatypes.md)  |  [JSON Encoding and Decoding](./JsonEncoding.md)  |  [Suggestions for Future Developments](./FutureDevelopments.md)
 
 # Developer manual for TopHat vizualization project: Introduction
 This manual is intended for developers of the Purescript-based proof-of-concept TopHat GUI developed by Gerarts, De Hoog, Naus, and Steenvoorden (Gerarts, De Hoog, Naus, and Steenvoorden [1]). The current framework is not yet a fully fledged TOP framework [2] and this manual is meant for developers working on its expansion. In this manual we will elaborate on the information in the introductory paper [2]. The aim of this manual is to aid new developers by providing background information on the modules and functions. This part of the manual describes the frontend of the framework.
