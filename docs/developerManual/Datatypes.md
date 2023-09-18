@@ -1,7 +1,7 @@
-[Introduction](./Introduction.md) |  [The Frontend and Data Types](./Datatypes.md)  |  [Json Encoding](./JsonEncoding.md)  |  [Suggestions for Future Developments](./FutureDevelopments.md)
+[Introduction](./Introduction.md) |  [The Frontend and Data Types](./Datatypes.md)  |  [JSON Encoding](./JsonEncoding.md)  |  [Suggestions for Future Developments](./FutureDevelopments.md)
 
 # The Frontend and Data Types
-As we mentioned in the Introduction, the vizualization code must somehow choose how to present data: In a user interface a request to enter a string for e.g. a name will usually be presented in a different way then a request to enter a number for e.g. the amount of items a user wants.
+As we mentioned in the Introduction, the vizualization code must somehow choose how to present data: In a user interface a request to enter a string for e.g. a name will usually be presented in a different way than a request to enter a number for e.g. the amount of items a user wants.
 
 In this project the choice was made to base this distinction upon the data type. So, data of the type 'string' will be presented in a certain manner, while boolean data will be presented in a different manner. This choice is seen best at the 'end' of the representation process, to wit in the 'Forms' that are used to build the UI. Therefore, we will now discuss the Form.purs module, which is part of the HTML code in Component (Component/HTML/Form.purs).
 
@@ -31,7 +31,7 @@ type FormState a
 ```
 **Figure 1**.  FromState type in Form.purs.
 
-The 'rawValue' of the state is a String. This data type was chosen based on the JSON data representation of raw data in the project. Json encoding and decoding is discussed in detail in the [next chapter](./JsonEncoding.md).
+The 'rawValue' of the state is a String. This data type was chosen based on the JSON data representation of raw data in the project. JSON encoding and decoding is discussed in detail in the [next chapter](./JsonEncoding.md).
 
 The parser-based validation (represented by the isValid and validate types) is based on the validation principle for formlets (See: https://github.com/fpco/halogen-form).
 
@@ -45,14 +45,14 @@ data FormWidget
 ```
 **Figure 2**.  FromWidget definition in Form.purs.
 
-These FormWidget are called in the helper functions at lines 86 and further in the Form.purs, that verify input.
+These FormWidgeta are called in the helper functions at lines 86 and further in the Form.purs, that verify input.
 
 Expanding the number of data types will have to start here.
 
 The FormStates that are produced by the helper functions at lines 86 and further (starting with the 'intInput' function) in the Form.purs, are used to choose the ComponentHTML (HTML representation) which is used to present the inputs. This is done in the render section of Form.purs which starts at line 180 (with the 'render' function). The rendering will be discussed later on.
 
 
-And finally, there is the manner upon which the information in the interface is updated, something that is not discussed in detail in the above theory. In the current project a 'timestamp' was chosen to distinguish old data from new data. This timestamp is generated using the standard purescript Data.DateTime.Instant module (https://pursuit.purescript.org/packages/purescript-datetime/6.1.0/docs/Data.DateTime.Instant). In the FormState type shown in Fig. 1, the timestamp is recorded as the 'lastChaneAt' value.
+And finally, there is the manner upon which the information in the interface is updated, something that is not discussed in detail in the above theory. In the current project a 'timestamp' was chosen to distinguish old data from new data. This timestamp is generated using the standard Purescript Data.DateTime.Instant module (https://pursuit.purescript.org/packages/purescript-datetime/6.1.0/docs/Data.DateTime.Instant). In the FormState type shown in Fig. 1, the timestamp is recorded as the 'lastChaneAt' value.
 
 #### Component rendering
 In accordance to the Halogen component structure, a render function is provided (line 180 in Form.purs). In the definition of this structure, again, the distinction is made between the datatypes (Int, Text, Boolean, and, recently, Number). For each type a separate render function is defined. This implies that, if we were to introduce a new datatype, a new, separate render function will have to be defined using the Halogen syntax.
@@ -65,14 +65,14 @@ The project now knows two number types: 'Number' and 'Int'.
 
 The form that is used to enter numbers, uses the HTML class input with type 'number' (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number). This may limit the entry options, because without special measures this input class only 'steps' (using the up/down arrows to the right) with integers, although this may depend on the browser type.
 
-One might use a relatively simple workaround to 'step' with non-integer values. This is by adding the 'step' attribute (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number). However, giving this 'step' attribute a low value, such as 0.001, will create the weird effect that changing the number using the stepper arrows in the right part of the input will only increase the input value by this small step. It also requires a step value small enough to obtain the desired floating point number. Which begs the question: "Which step size is small enough to accomodate all future uses of the input type?" A possible solution is using the 'step="any"' attribute.
+One might use a relatively simple workaround to 'step' with non-integer values. This is by adding the 'step' attribute (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number). However, giving this 'step' attribute a low value, such as 0.001, will create the weird effect that changing the number using the stepper arrows in the right part of the input will only increase the input value by this small step. It also requires a step value small enough to obtain the desired floating point number. Which begs the question: "Which step size is small enough to accomodate all future uses of the input type?" 
 
-However, the 'step' attribute does not seem to be supported in the purescript Halogen version used in the current project. In future versions, this may be a solution, because there is a new module: "Html.Codegen.Halogen" (current version: 0.01) that does support the 'step' attribute.
+A possible solution is using the 'step="any"' attribute. However, the 'step' attribute does not seem to be supported in the Purescript Halogen version used in the current project. In future versions, this may be a solution, because there is a new module: "Html.Codegen.Halogen" (current version: 0.01) that does support the 'step' attribute.
 
 An alternative approach is using the attribute: 'inputmode="decimal"', and possibly a 'pattern="[0-9]*[.,]?[0-9]*" ' attribute.
 (https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/inputMode)
 
-However, purescript does not, at the moment, support the 'inputmode' attribute.
+However, Purescript does not, at the moment, support the 'inputmode' attribute.
 When we try to add the property as described in the "Rendering HTML" chapter of the Halogen Guide.
 ```
 inputmode :: forall r i. String -> HH.IProp ( sandbox :: String | r ) i
@@ -105,7 +105,7 @@ _formBoolean = Proxy :: Proxy "formBoolean"
 To completely separate the datatype specific code from the rest of the project, it might be an idea for future development to move these definitions to the Component/Datastructure/Typedefinitions.purs - module
 
 ### Conclusion
-As you can see in the above, adding a new datatype requires many changes: a new widget type needs to be defined in the Form module, and new helper, render and handle functions need to be defined for each. And, furthermore, the Taskloader module needs to be expanded with a new Slot. In addition, adding new datatypes also requires new Json encoding and decoding. This encoding and decoding is discussed in the [next chapter](./JsonEncoding.md).
+As you can see in the above, adding a new datatype requires many changes: a new widget type needs to be defined in the Form module, and new helper, render and handle functions need to be defined for each. And, furthermore, the Taskloader module needs to be expanded with a new Slot. In addition, adding new datatypes also requires new JSON encoding and decoding. This encoding and decoding is discussed in the [next chapter](./JsonEncoding.md).
 If it is the intention for the future to add several new datatypes, a redesign of the entire project to separate the code that requires no changes from the code that requires additions for each new datatype, seems to be an option. This and other suggestions for future developments will be given in a [later chapter](./FutureDevelopments.md).
 
 [next chapter ->](./JsonEncoding.md).
