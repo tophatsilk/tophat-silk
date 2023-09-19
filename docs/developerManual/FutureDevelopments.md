@@ -22,6 +22,8 @@ For example:
 
 Developers, please add your own suggestions to this chapter, with explanations, so your knowledge may be passed on.
 
+Please also register notable changes in the [Changelog](../../CHANGELOG.md).
+
 
 
 # References
